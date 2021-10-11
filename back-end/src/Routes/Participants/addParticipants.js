@@ -26,6 +26,7 @@ const addUser = (req, res) => {
 
     participants.push(newParticipant);
 	messages.push(newMessage);
+    console.log(participants, messages)
 	res.sendStatus(200);
 }
 
