@@ -1,4 +1,4 @@
-import participants from "../../data/participants";
+import participants from "../../data/participants.js";
 
 const sendStatus = (req, res) => {
 
