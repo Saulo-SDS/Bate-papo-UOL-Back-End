@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "joi": "^17.4.2",
+    "string-strip-html": "^9.0.2"
+  }
+}

@@ -1,16 +1,23 @@
 import dayjs from "dayjs";
 import participants from "../../data/participants.js";
 import messages from "../../data/messages.js";
+import Joi from "joi";
 
 const addUser = (req, res) => {
-    
-    const nameExist = participants.find((participant) => participant.name === req.body.name);
+    let name = req.body.name;
+    const nameExist = participants.find((participant) => participant.name === name);
+    const userSchema = Joi.object({
+        name: Joi.string()
+            .required()
+    });  
+    const schemaValidation = userSchema.validate({name});
 
-    if(nameExist || !req.body.name) {
+    if(nameExist || schemaValidation.error) {
         res.sendStatus(400); 
         return;
     }
-
+    
+    name = name.trim();
     const newParticipant = {
         name: req.body.name,
         lastStatus: Date.now(),
@@ -26,7 +33,6 @@ const addUser = (req, res) => {
 
     participants.push(newParticipant);
 	messages.push(newMessage);
-    console.log(participants, messages)
 	res.sendStatus(200);
 }
 

@@ -1,17 +1,28 @@
 import dayjs from "dayjs";
 import participants from "../../data/participants.js";
 import messages from "../../data/messages.js";
+import Joi from "joi";
 
 const addMensseger = (req, res) => {
 
     const fromUser = req.get('user');
     const message = req.body;
     const userExist = participants.find((participant) => participant.name === fromUser);
-    const typeValid = message.type === 'message' || message.type === 'private_message';
+    message.text = message.text.trim();
+    
+    const messageSchema = Joi.object({
+        to: Joi.string()
+            .required(),
+        text: Joi.string()
+            .required(),
+        type: Joi.string()
+            .valid("message", "private_message") 
+            .required()
+    });  
 
-    const messageInvalid = !message.to || !message.text || !userExist || !typeValid;
-
-    if(messageInvalid) {
+    const schemaValidation = messageSchema.validate(message);
+    
+    if(!userExist || schemaValidation.error) {
         res.sendStatus(400);
         return;
     }
