@@ -4,6 +4,6 @@ import checkUser from "./Utils/index.js";
 
 Routes(App);
 App.listen(4000);
-//setInterval(checkUser, 15000);
+setInterval(checkUser, 15000);
 
-console.log("Server on");
+console.log("Server listen in port: 4000");

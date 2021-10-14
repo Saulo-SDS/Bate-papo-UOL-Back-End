@@ -9,7 +9,7 @@ const listMessages = (req, res) => {
                                                     message.from === req.get('user'));
 
     if(limit) dataMessages = dataMessages.slice(-parseInt(limit));
-
+    
     res.send(dataMessages);
 }
 

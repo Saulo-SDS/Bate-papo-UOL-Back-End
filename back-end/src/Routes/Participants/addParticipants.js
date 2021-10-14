@@ -14,7 +14,7 @@ const addUser = (req, res) => {
         name: Joi.string()
             .required()
     });  
-    
+
     const schemaValidation = userSchema.validate({name});
 
     if(nameExist || schemaValidation.error) {
@@ -29,7 +29,7 @@ const addUser = (req, res) => {
     }
 
     const newMessage = {
-        from: req.body.name,
+        from: name,
 		to: 'Todos',
 		text: 'entra na sala...',
 		type: 'status',
