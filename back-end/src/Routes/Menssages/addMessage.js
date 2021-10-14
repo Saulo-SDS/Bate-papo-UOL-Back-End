@@ -2,13 +2,14 @@ import dayjs from "dayjs";
 import participants from "../../data/participants.js";
 import messages from "../../data/messages.js";
 import Joi from "joi";
+import { stripHtml } from "string-strip-html";
 
 const addMensseger = (req, res) => {
 
     const fromUser = req.get('user');
     const message = req.body;
     const userExist = participants.find((participant) => participant.name === fromUser);
-    message.text = message.text.trim();
+    message.text = stripHtml(message.text).result.trim();
     
     const messageSchema = Joi.object({
         to: Joi.string()
@@ -30,7 +31,6 @@ const addMensseger = (req, res) => {
     message.from = fromUser;
     message.time = dayjs().format('HH:mm:ss');
     messages.push(message);
-    console.log(messages)
     res.sendStatus(200);
 }
 
